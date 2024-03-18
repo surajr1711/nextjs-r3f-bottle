@@ -39,33 +39,19 @@ export default function Experience({ focus, setFocus, ...props }) {
 	const { ref, actions } = useAnimations(animations);
 
 	const toggleCap = () => {
+		if (!isCapOpen) {
+			actions.closeCap.stop();
+			actions.openCap.setLoop(THREE.LoopOnce);
+			actions.openCap.clampWhenFinished = true;
+			actions.openCap.reset().play();
+		} else {
+			actions.openCap.stop();
+			actions.closeCap.setLoop(THREE.LoopOnce);
+			actions.closeCap.clampWhenFinished = true;
+			actions.closeCap.reset().play();
+		}
 		setIsCapOpen(!isCapOpen);
 	};
-
-	// const crossFadeTime = 0.2;
-
-	useEffect(() => {
-		const closeAction = actions.closeCap;
-		const openAction = actions.openCap;
-		window.setTimeout(() => {}, 2000); // stops multiple clicks before animation finishes
-		if (isCapOpen) {
-			closeAction.setLoop(THREE.LoopOnce);
-			closeAction.clampWhenFinished = true;
-			closeAction.reset().play();
-			return () => {
-				// closeAction.crossFadeTo(openAction, crossFadeTime);
-				closeAction.stop();
-			};
-		} else {
-			openAction.setLoop(THREE.LoopOnce);
-			openAction.clampWhenFinished = true;
-			openAction.reset().play();
-			return () => {
-				// openAction.crossFadeTo(closeAction, crossFadeTime);
-				openAction.stop();
-			};
-		}
-	}, [actions.closeCap, actions.openCap, isCapOpen]);
 
 	const [colors, setColors] = useState(defaultColors);
 
