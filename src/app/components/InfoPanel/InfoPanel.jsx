@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import { Html } from "@react-three/drei";
-import { productInfo as bottleInfo } from "../../data/info";
 import { MathUtils } from "three";
 
 const InfoPanel = ({ info }) => {
@@ -27,7 +25,7 @@ const InfoPanel = ({ info }) => {
 	const button = info.hasOwnProperty("link") ? <a href={info.link.url}>{info.link.text}</a> : null;
 
 	return (
-		<div className={styles.panel}>
+		<div>
 			<span className={styles.title}>{info.name}</span>
 
 			<span>Specifications</span>

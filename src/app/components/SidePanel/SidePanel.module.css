@@ -1,0 +1,44 @@
+.sidePanel {
+	position: absolute;
+	width: 400px;
+	height: 100vh;
+	top: 0;
+	overflow-y: scroll;
+	background-color: rgba(0, 0, 0, 0.75);
+	padding: 1rem;
+	transition: 0.3s ease-out;
+}
+.left {
+	left: 0;
+}
+.right {
+	right: 0;
+}
+
+/* Side panel open close button */
+.button {
+	position: absolute;
+	width: 80px;
+	top: 0;
+}
+/* For left sidepanel button is on the right */
+.button.leftSidePanel {
+	/* right: -80px; */
+	right: 0;
+}
+/* For right sidepanel button is on the left */
+.button.rightSidePanel {
+	/* left: -80px; */
+	left: 0;
+}
+
+.sidePanel.left.close {
+	transform: translateX(-380px);
+}
+.sidePanel.right.close {
+	transform: translateX(380px);
+}
+
+.title {
+	font-size: 2rem;
+}
