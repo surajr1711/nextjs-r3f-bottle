@@ -7,14 +7,24 @@ import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { productInfo } from "./data/info";
 import SidePanel from "./components/SidePanel/SidePanel";
 import PanelSection, { UserInstructionsSection } from "./components/SidePanel/PanelSection";
+import { useAnimations, useGLTF } from "@react-three/drei";
+import { useSnapshot } from "valtio";
+import { state } from "./state/state";
+import { HexColorPicker } from "react-colorful";
+import ColorPicker from "./components/ColorPicker/ColorPicker";
+import POI from "./components/POI/POI";
 
 export default function Home() {
-	const [focus, setFocus] = useState("product");
+	const snap = useSnapshot(state);
+
+	// const [focus, setFocus] = useState("product");
+
 	return (
 		<>
 			<Canvas>
 				<Suspense fallback={null}>
-					<Experience focus={focus} setFocus={setFocus} />
+					<Experience />
+					<POI />
 				</Suspense>
 			</Canvas>
 
@@ -23,12 +33,21 @@ export default function Home() {
 				<UserInstructionsSection />
 
 				<PanelSection title="Product details" open={true}>
-					<InfoPanel info={productInfo[focus]} />
+					{/* <InfoPanel info={productInfo["product"]} /> */}
+					<InfoPanel info={productInfo[snap?.active || "product"]} />
 				</PanelSection>
 			</SidePanel>
 
 			{/* Interactions Panel on right */}
-			<SidePanel title="Interactions" left={false} />
+			<SidePanel title="Interactions" left={false}>
+				<PanelSection title="Customizations">
+					<ColorPicker />
+				</PanelSection>
+
+				<PanelSection title="Animations">
+					<button onClick={state.actions?.toggleCap}>ToggleCap</button>
+				</PanelSection>
+			</SidePanel>
 		</>
 	);
 }

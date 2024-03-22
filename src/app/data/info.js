@@ -1,11 +1,37 @@
 export const productInfo = {
 	product: {
-		name: "zojirushi bottle",
+		name: "Zojirushi water bottle",
 		specs: [
 			["Model", "SM-SF60-AD"],
 			[
 				"Colors",
-				"Navy, white, black, stainless steel, garnet red, matte black, beige gold, matte gold, matte black, slate grey",
+				[
+					"navy",
+					"white",
+					"silky black",
+					"matte black",
+					"stainless steel",
+					"garnet red",
+					"beige gold",
+					"matte gold",
+					"slate grey",
+					/* { name: "Navy", hex: { cap: "#27487C", bottle: "#27487C", button: "#AAAAAA" } },
+					{ name: "White", hex: { cap: "", bottle: "", button: "" } },
+					{ name: "Silky Black", hex: { cap: "", bottle: "", button: "" } },
+					{ name: "Stainless Steel", hex: { cap: "", bottle: "", button: "" } },
+					{ name: "Garnet Red", hex: { cap: "", bottle: "", button: "" } },
+					{ name: "Matte Black", hex: { cap: "", bottle: "", button: "" } },
+					{ name: "Beige Gold", hex: { cap: "", bottle: "", button: "" } },
+					{ name: "Matte Gold", hex: { cap: "", bottle: "", button: "" } },
+					{ name: "Slate Grey", hex: { cap: "", bottle: "", button: "" } }, */
+				],
+			],
+			[
+				"Variants",
+				[
+					["capacity", "600ml"],
+					["capacity", "400ml"],
+				],
 			],
 			["Dimensions", '2.76"W x 9.84"H'],
 			["Weight", "0.235kgs"],
@@ -15,26 +41,20 @@ export const productInfo = {
 			["Cold retention", "46°F @ 6 hrs"],
 		],
 		features: [
-			"2-step lid release process prevents excess condensation on the stopper from being flung off while the lid	opens.",
-			"Air vent on the mouthpiece allows beverages to flow out smoothly, without gushing or overflowing.",
-			"Stopper disassembles for thorough cleaning and tight fitted flip-open lid keeps beverages hotter or colder.",
-			"Easy-to-clean, stain & odor resistant nonstick coated interior.",
+			"Spring-action lid release makes opening convenient.",
+			"Air passage in the sip nozzle allows liquids to flow smoothly.",
+			"Stopper and nozzle can be disassembled for washing.",
+			"Stain & odor resistant nonstick coated interior.",
 		],
-		link: {
-			text: "Buy on Amazon",
-			url: "https://www.amazon.com/Zojirushi-SM-SA60-BA-Stainless-Steel-20-Ounce/dp/B07W3SXXR8/ref=pd_bxgy_d_sccl_2/131-7429245-8717036?pd_rd_w=X2Raz&content-id=amzn1.sym.615d9037-0d71-4715-8421-5695fbf26656&pf_rd_p=615d9037-0d71-4715-8421-5695fbf26656&pf_rd_r=06VBW1HGV9XVQJGW3SWX&pd_rd_wg=dK3zG&pd_rd_r=92d635b3-5d3b-48e7-b0a1-5327882f5ae5&pd_rd_i=B00HYOGUM2&th=1",
-		},
-	},
-	capTop: {
-		name: "capTop",
-		specs: [
-			["spec1", "detail1"],
-			["spec2", "detail2"],
+		misc: [
+			[
+				"amazon link",
+				"https://www.amazon.com/Zojirushi-SM-SA60-BA-Stainless-Steel-20-Ounce/dp/B07W3SXXR8/ref=pd_bxgy_d_sccl_2/131-7429245-8717036?pd_rd_w=X2Raz&content-id=amzn1.sym.615d9037-0d71-4715-8421-5695fbf26656&pf_rd_p=615d9037-0d71-4715-8421-5695fbf26656&pf_rd_r=06VBW1HGV9XVQJGW3SWX&pd_rd_wg=dK3zG&pd_rd_r=92d635b3-5d3b-48e7-b0a1-5327882f5ae5&pd_rd_i=B00HYOGUM2&th=1",
+			],
 		],
-		features: ["feature1", "feature2"],
 	},
-	capBottom: {
-		name: "capBottom",
+	cap: {
+		name: "Cap",
 		specs: [
 			["spec1", "detail1"],
 			["spec2", "detail2"],
@@ -42,7 +62,7 @@ export const productInfo = {
 		features: ["feature1", "feature2"],
 	},
 	bottle: {
-		name: "bottle",
+		name: "Bottle",
 		specs: [
 			["spec1", "detail1"],
 			["spec2", "detail2"],
@@ -50,7 +70,7 @@ export const productInfo = {
 		features: ["feature1", "feature2"],
 	},
 	button: {
-		name: "button",
+		name: "Button",
 		specs: [
 			["spec1", "detail1"],
 			["spec2", "detail2"],

@@ -13,33 +13,29 @@ import {
 } from "@react-three/drei";
 import { useControls } from "leva";
 import { Perf } from "r3f-perf";
-import { useContext, useEffect, useRef, useState, Suspense, useMemo } from "react";
+import { useContext, useEffect, useRef, useState, Suspense, useMemo, useCallback } from "react";
 import POI from "../POI/POI";
 import { DirectionalLightHelper, HemisphereLightHelper, SpotLightHelper } from "three";
 import InfoPanel from "../InfoPanel/InfoPanel";
 import { productInfo } from "@/app/data/info";
 import ClickToFocus from "../ClickToFocus/ClickToFocus";
 import * as THREE from "three";
+import { useSnapshot } from "valtio";
+import { state } from "@/app/state/state";
 
 // const studioHDRi = import("@pmndrs/assets/hdri/studio.exr").then((module) => module.default);
 
 const waterbottle = "/models/32-medpoly-anim-gltfjsx.glb";
-const defaultColors = {
-	cap: "#27487C",
-	bottle: "#27487C",
-	button: "#AAAAAA",
-};
 
-export default function Experience({ focus, setFocus, ...props }) {
-	const [isCapOpen, setIsCapOpen] = useState(false);
-	// get the animations from the model
+export default function Experience({ model, ...props }) {
 	const { nodes, materials, animations } = useGLTF(waterbottle);
-
-	// setup and extract the tooling to control the animations using useanimations hook.
 	const { ref, actions } = useAnimations(animations);
 
-	const toggleCap = () => {
-		if (!isCapOpen) {
+	const snap = useSnapshot(state);
+
+	// create toggleCap event handler and store it in state
+	const toggleCap = useCallback(() => {
+		if (!snap.isCapOpen) {
 			actions.closeCap.stop();
 			actions.openCap.setLoop(THREE.LoopOnce);
 			actions.openCap.clampWhenFinished = true;
@@ -50,10 +46,12 @@ export default function Experience({ focus, setFocus, ...props }) {
 			actions.closeCap.clampWhenFinished = true;
 			actions.closeCap.reset().play();
 		}
-		setIsCapOpen(!isCapOpen);
-	};
+		state.isCapOpen = !snap.isCapOpen;
+	}, [actions.closeCap, actions.openCap, snap.isCapOpen]);
 
-	const [colors, setColors] = useState(defaultColors);
+	useEffect(() => {
+		state.actions = { toggleCap };
+	}, [toggleCap]);
 
 	/*
 	// REFS
@@ -165,78 +163,68 @@ export default function Experience({ focus, setFocus, ...props }) {
 		<>
 			<color args={["dimgrey"]} attach="background" />
 			<Stage shadows={{ type: "contact", opacity: 0.2, blur: 3 }} environment="studio" preset="rembrandt" intensity={1}>
-				<Bounds fit clip observe margin={1.2}>
-					<OrbitControls enablePan={false} enableZoom={false} makeDefault />
+				{/* <Bounds fit clip observe margin={1.2}> */}
+				<OrbitControls enablePan={false} enableZoom={false} makeDefault />
 
-					<ClickToFocus focus={focus} setFocus={setFocus}>
-						<group ref={ref} {...props} dispose={null}>
-							<group name="Scene">
-								<mesh
-									name="capTop"
-									castShadow
-									receiveShadow
-									geometry={nodes.capTop.geometry}
-									material={materials.cap}
-									position={[0, 0.213, -0.033]}
-									material-color={colors.cap}
-								>
-									<POI
-										colors={colors}
-										setColors={setColors}
-										label="Cap"
-										position={[0.04, 0.02, 0]}
-										changeColorOf="cap"
-									/>
-								</mesh>
-								<mesh
-									name="capBottom"
-									castShadow
-									receiveShadow
-									geometry={nodes.capBottom.geometry}
-									material={materials.cap}
-									position={[0, 0.191, 0]}
-									material-color={colors.cap}
-								/>
-
-								<mesh
-									name="bottle"
-									castShadow
-									receiveShadow
-									geometry={nodes.bottle.geometry}
-									material={materials.bottle}
-									material-color={colors.bottle}
-								>
-									<POI
-										colors={colors}
-										setColors={setColors}
-										label="Bottle"
-										position={[0.04, 0.08, 0]}
-										changeColorOf="bottle"
-									>
-										<button onClick={toggleCap}>Toggle cap</button>
-									</POI>
-								</mesh>
-								<mesh
-									name="button"
-									castShadow
-									receiveShadow
-									geometry={nodes.button.geometry}
-									material={materials.button}
-									position={[0, 0.212, 0.03]}
-									material-color={colors.button}
-								>
-									<POI
-										colors={colors}
-										setColors={setColors}
-										label="Button"
-										position={[-0.02, 0, 0]}
-										changeColorOf="button"
-									/>
-								</mesh>
-							</group>
-						</group>
-					</ClickToFocus>
-				</Bounds>
+				{/* <ClickToFocus focus={focus} setFocus={setFocus}> */}
+				<group
+					ref={ref}
+					{...props}
+					onClick={(e) => {
+						e.stopPropagation();
+						// console.log(e.object);
+						state.active = e.object.material.name;
+					}}
+					onPointerMissed={() => {
+						state.active = null;
+					}}
+					dispose={null}
+					onPointerOver={(e) => {
+						e.stopPropagation();
+						state.hovered = e.object.material.name;
+					}}
+					onPointerOut={(e) => {
+						if (e.intersections.length === 0) state.hovered = null;
+					}}
+				>
+					<mesh
+						name="capTop"
+						castShadow
+						receiveShadow
+						geometry={nodes.capTop.geometry}
+						material={materials.cap}
+						position={[0, 0.213, -0.033]}
+						material-color={snap.colors.cap}
+					/>
+					<mesh
+						name="capBottom"
+						castShadow
+						receiveShadow
+						geometry={nodes.capBottom.geometry}
+						material={materials.cap}
+						position={[0, 0.191, 0]}
+						material-color={snap.colors.cap}
+					/>
+					<mesh
+						name="bottle"
+						castShadow
+						receiveShadow
+						geometry={nodes.bottle.geometry}
+						material={materials.bottle}
+						material-color={snap.colors.bottle}
+					/>
+					<mesh
+						name="button"
+						castShadow
+						receiveShadow
+						geometry={nodes.button.geometry}
+						material={materials.button}
+						position={[0, 0.212, 0.03]}
+						material-color={snap.colors.button}
+					/>
+				</group>
+				{/* </ClickToFocus> */}
+				{/* </Bounds> */}
 			</Stage>
 		</>
 	);
