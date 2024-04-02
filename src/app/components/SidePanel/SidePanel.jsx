@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SidePanel.module.css";
 
 const SidePanel = ({ title, left = true, open = true, children, ...props }) => {
 	const [isOpen, setIsOpen] = useState(open);
+
+	useEffect(() => {
+		setIsOpen(open);
+	}, [open]);
 
 	const sidePanelStyles = `${styles.sidePanel} ${left ? styles.left : styles.right} ${!isOpen && styles.close}`;
 	const buttonStyles = `${styles.button} ${left ? styles.leftSidePanel : styles.rightSidePanel}`;

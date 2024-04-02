@@ -1,232 +1,128 @@
-import {
-	OrbitControls,
-	useGLTF,
-	useTexture,
-	Stage,
-	SpotLight,
-	useHelper,
-	Environment,
-	PerspectiveCamera,
-	Bounds,
-	useBounds,
-	useAnimations,
-} from "@react-three/drei";
-import { useControls } from "leva";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Perf } from "r3f-perf";
-import { useContext, useEffect, useRef, useState, Suspense, useMemo, useCallback } from "react";
-import POI from "../POI/POI";
-import { DirectionalLightHelper, HemisphereLightHelper, SpotLightHelper } from "three";
-import InfoPanel from "../InfoPanel/InfoPanel";
-import { productInfo } from "@/app/data/info";
-import ClickToFocus from "../ClickToFocus/ClickToFocus";
-import * as THREE from "three";
+import { useControls } from "leva";
+import { OrbitControls, Environment } from "@react-three/drei";
+import Model from "../Model/Model";
+import POIs from "../POIs/POIs";
 import { useSnapshot } from "valtio";
 import { state } from "@/app/state/state";
+import { useThree } from "@react-three/fiber";
+import gsap from "gsap";
+import * as THREE from "three";
+import { PerspectiveCamera } from "@react-three/drei";
 
-// const studioHDRi = import("@pmndrs/assets/hdri/studio.exr").then((module) => module.default);
+const Experience = ({
+	activeMesh,
+	setActiveMesh,
+	hoveredMesh,
+	setHoveredMesh,
+	isCapOpen,
+	setIsCapOpen,
+	colors,
+	setColors,
+	...props
+}) => {
+	const controlsRef = useRef();
+	const { camera } = useThree();
+	// const cameraRef = useRef();
 
-const waterbottle = "/models/32-medpoly-anim-gltfjsx.glb";
+	// LEVA
+	const { bgColor, perfVisible } = useControls({
+		bgColor: "#dddddd",
+		perfVisible: true,
+	});
+	const {} = useControls("Orbit controls", {});
+	// maxDistance: { value: 7.0, step: 0.1, min: 0, max: 10.0 },
+	// minDistance: { value: 2.0, step: 0.1, min: 0, max: 10.0 },
+	const { positionX, positionY, positionZ } = useControls("camera position", {
+		positionX: { value: 0, step: 0.1, min: -10, max: 10 },
+		positionY: { value: 0, step: 0.1, min: -10, max: 10 },
+		positionZ: { value: 7, step: 0.1, min: -10, max: 10 },
+	});
+	// const { lookAtX, lookAtY, lookAtZ } = useControls("orbit controls target", {
+	// 	lookAtX: { value: 0, step: 0.1, min: -10, max: 10 },
+	// 	lookAtY: { value: 0, step: 0.1, min: -10, max: 10 },
+	// 	lookAtZ: { value: 0, step: 0.1, min: -10, max: 10 },
+	// });
 
-export default function Experience({ model, ...props }) {
-	const { nodes, materials, animations } = useGLTF(waterbottle);
-	const { ref, actions } = useAnimations(animations);
-
-	const snap = useSnapshot(state);
-
-	// create toggleCap event handler and store it in state
-	const toggleCap = useCallback(() => {
-		if (!snap.isCapOpen) {
-			actions.closeCap.stop();
-			actions.openCap.setLoop(THREE.LoopOnce);
-			actions.openCap.clampWhenFinished = true;
-			actions.openCap.reset().play();
-		} else {
-			actions.openCap.stop();
-			actions.closeCap.setLoop(THREE.LoopOnce);
-			actions.closeCap.clampWhenFinished = true;
-			actions.closeCap.reset().play();
-		}
-		state.isCapOpen = !snap.isCapOpen;
-	}, [actions.closeCap, actions.openCap, snap.isCapOpen]);
-
-	useEffect(() => {
-		state.actions = { toggleCap };
-	}, [toggleCap]);
-
-	/*
-	// REFS
-	const directionalLightRef = useRef();
-	const hemisphereLightRef = useRef();
-	const spotlightRef = useRef();
-
-		// HELPERS
-	useHelper(directionalLightRef, DirectionalLightHelper, "cyan");
-	useHelper(hemisphereLightRef, HemisphereLightHelper);
-	useHelper(spotlightRef, SpotLightHelper, "red");
-
-		// LEVA CONTROLS
-	const intensityObj = {
-		value: 0.5,
-		max: 20,
-		min: 0,
-		step: 0.01,
+	const resetCamera = () => {
+		// set camera position to front of bottle
+		gsap.to(camera.position, {
+			x: 0,
+			y: 3.06,
+			z: 5,
+			duration: 1,
+			ease: "power2.inOut",
+		});
+		// set center of orbit to center of scene
+		gsap.to(controlsRef.current.target, {
+			x: 0,
+			y: 0,
+			z: 0,
+			duration: 1,
+			ease: "power2.inOut",
+		});
 	};
-	const positionObj = {
-		value: 0.5,
-		max: 5,
-		min: -5,
-		step: 0.01,
+
+	const animateCamera = (e, camPos, orbitTarget) => {
+		e.stopPropagation();
+		// update the camera position
+		gsap.to(camera.position, {
+			x: camPos.x,
+			y: camPos.y,
+			z: camPos.z,
+			duration: 1,
+			ease: "power2.inOut",
+		});
+		// update the center of orbit to mesh center
+		gsap.to(controlsRef.current.target, {
+			x: orbitTarget.x,
+			y: orbitTarget.y,
+			z: orbitTarget.z,
+			duration: 1,
+			ease: "power2.inOut",
+		});
 	};
-
-	 // LEVA FILL LIGHTING
-	const { intensity: ambientLightIntensity } = useControls("Ambient: Fill lighting", {
-		intensity: intensityObj,
-	});
-	const {
-		intensity: directionalLightIntensity,
-		x: directionalLightX,
-		y: directionalLightY,
-		z: directionalLightZ,
-	} = useControls("Directional: Fill lighting", {
-		intensity: intensityObj,
-		x: positionObj,
-		y: positionObj,
-		z: positionObj,
-	});
-	const {
-		intensity: hemisphereLightIntensity,
-		x: hemispherelLightX,
-		y: hemispherelLightY,
-		z: hemispherelLightZ,
-		skyColor: hemisphereSkyColor,
-		groundColor: hemisphereGroundColor,
-	} = useControls("Hemisphere: Fill lighting", {
-		intensity: intensityObj,
-		x: positionObj,
-		y: positionObj,
-		z: positionObj,
-		skyColor: "blue",
-		groundColor: "brown",
-	});
-
-	const {
-		intensity: spotlightIntensity,
-		x: spotlightX,
-		y: spotlightY,
-		z: spotlightZ,
-	} = useControls("Spotlight: Key lighting", {
-		intensity: intensityObj,
-		x: positionObj,
-		y: positionObj,
-		z: positionObj,
-	});
-
-		// LEVA ENVIRONMENT MAP
-	const { envMapIntensity } = useControls("environment map", {
-		envMapIntensity: { value: 3.5, min: 0, max: 12, step: 0.1 },
-	});
-
-		// LEVA PART COLORS
-	const { capColor, bottleColor, buttonColor } = useControls("Colors", {
-		capColor: "#27487C",
-		bottleColor: "#27487C",
-		buttonColor: "#AAAAAA",
-	});
-	const { x, y, z } = useControls("Label position", {
-		x: {
-			value: 0,
-			step: 0.01,
-			min: -1,
-			max: 1,
-		},
-		y: {
-			value: 0,
-			step: 0.01,
-			min: -1,
-			max: 1,
-		},
-		z: {
-			value: 0,
-			step: 0.01,
-			min: -1,
-			max: 1,
-		},
-	});
-
-		// LEVA ORBIT CONTROLS
-	const { maxDistance, minDistance } = useControls("Orbit Controls", {
-		maxDistance: 10,
-		minDistance: 1,
-	}); */
 
 	return (
 		<>
-			<color args={["dimgrey"]} attach="background" />
-			<Stage shadows={{ type: "contact", opacity: 0.2, blur: 3 }} environment="studio" preset="rembrandt" intensity={1}>
-				{/* <Bounds fit clip observe margin={1.2}> */}
-				<OrbitControls enablePan={false} enableZoom={false} makeDefault />
+			{perfVisible ? <Perf position="top-left" /> : null}
 
-				{/* <ClickToFocus focus={focus} setFocus={setFocus}> */}
-				<group
-					ref={ref}
-					{...props}
-					onClick={(e) => {
-						e.stopPropagation();
-						// console.log(e.object);
-						state.active = e.object.material.name;
-					}}
-					onPointerMissed={() => {
-						state.active = null;
-					}}
-					dispose={null}
-					onPointerOver={(e) => {
-						e.stopPropagation();
-						state.hovered = e.object.material.name;
-					}}
-					onPointerOut={(e) => {
-						if (e.intersections.length === 0) state.hovered = null;
-					}}
-				>
-					<mesh
-						name="capTop"
-						castShadow
-						receiveShadow
-						geometry={nodes.capTop.geometry}
-						material={materials.cap}
-						position={[0, 0.213, -0.033]}
-						material-color={snap.colors.cap}
-					/>
-					<mesh
-						name="capBottom"
-						castShadow
-						receiveShadow
-						geometry={nodes.capBottom.geometry}
-						material={materials.cap}
-						position={[0, 0.191, 0]}
-						material-color={snap.colors.cap}
-					/>
-					<mesh
-						name="bottle"
-						castShadow
-						receiveShadow
-						geometry={nodes.bottle.geometry}
-						material={materials.bottle}
-						material-color={snap.colors.bottle}
-					/>
-					<mesh
-						name="button"
-						castShadow
-						receiveShadow
-						geometry={nodes.button.geometry}
-						material={materials.button}
-						position={[0, 0.212, 0.03]}
-						material-color={snap.colors.button}
-					/>
-				</group>
-				{/* </ClickToFocus> */}
-				{/* </Bounds> */}
-			</Stage>
+			{/* <PerspectiveCamera
+				// ref={cameraRef}
+				position={[positionX, positionY, positionZ]}
+				// lookAt={[lookAtX, lookAtY, lookAtZ]}
+				makeDefault
+			/> */}
+
+			<OrbitControls
+				ref={controlsRef}
+				enablePan={false}
+				// enableZoom={false}
+				// maxDistance={maxDistance}
+				// minDistance={minDistance}
+				// target={[lookAtX, lookAtY, lookAtZ]}
+				makeDefault
+			/>
+
+			<color args={[bgColor]} attach="background" />
+			<Environment preset="studio" />
+
+			<Suspense fallback={null}>
+				<Model
+					hoveredMesh={hoveredMesh}
+					setHoveredMesh={setHoveredMesh}
+					setActiveMesh={setActiveMesh}
+					isCapOpen={isCapOpen}
+					setIsCapOpen={setIsCapOpen}
+					colors={colors}
+					setColors={setColors}
+					resetCamera={resetCamera}
+				/>
+				<POIs hoveredMesh={hoveredMesh} setActiveMesh={setActiveMesh} animateCamera={animateCamera} />
+			</Suspense>
 		</>
 	);
-}
-useGLTF.preload(waterbottle);
+};
+
+export default Experience;

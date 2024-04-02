@@ -1,8 +1,10 @@
 .poi {
 	background-color: white;
-	border-radius: 8px;
 	width: 8px;
 	height: 8px;
+	border-radius: 8px;
+	border: none;
+	cursor: pointer;
 	position: relative;
 }
 .poi::before {
@@ -17,7 +19,6 @@
 	border-radius: 16px;
 	border: 2px solid white;
 	opacity: 0;
-	/* transition: 0.2s ease-out; */
 }
 
 /* When a part is hovered or when the POI itself is hovered */
@@ -32,13 +33,13 @@
 	}
 }
 
-.poi:hover::before,
-.poi.hover::before {
+.poi.hover::before,
+.poi:hover::before {
 	animation: pulse 0.6s infinite alternate;
 }
 
-/* When a part is selected */
-.poi.active::before {
+/* When a poi is clicked or a mesh is selected */
+.poi:focus::before {
 	opacity: 1;
 }
 
@@ -54,8 +55,13 @@
 	background-color: rgba(255, 255, 255, 0.8);
 	color: black;
 	border-radius: 1rem;
-	pointer-events: none;
 	visibility: hidden;
+	/* Unselectable text */
+	-webkit-user-select: none; /* Safari, Chrome, and newer browsers */
+	-khtml-user-select: none; /* Older versions of Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
 }
 .title {
 	font-size: 0.75rem;
@@ -66,8 +72,8 @@
 }
 
 /* when the poi is active or hovered, display the text */
-.poi.hover .text,
-.poi:hover .text,
-.poi.active .text {
+.poi:hover + .text,
+/* .poi:hover .text, */
+.poi:focus + .text {
 	visibility: visible;
 }
