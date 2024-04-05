@@ -15,9 +15,6 @@ const ColorPicker = ({ activeMesh, colors, setColors, ...props }) => {
 					color={colors[activeMesh]}
 					onChange={(color) => setColors({ ...colors, [activeMesh]: color })}
 				/>
-				{/* <h1>{snap.active ? snap.active : "Select a part of the bottle."}</h1>
-			<div className={!snap.active ? styles.disabled : null}>
-				<HexColorPicker color={snap.colors[snap.active]} onChange={(color) => (state.colors[snap.active] = color)} /> */}
 			</div>
 		</div>
 	);

@@ -39,6 +39,7 @@
 }
 
 /* When a poi is clicked or a mesh is selected */
+.poi.focus::before,
 .poi:focus::before {
 	opacity: 1;
 }
@@ -73,7 +74,7 @@
 
 /* when the poi is active or hovered, display the text */
 .poi:hover + .text,
-/* .poi:hover .text, */
+.poi.focus + .text,
 .poi:focus + .text {
 	visibility: visible;
 }

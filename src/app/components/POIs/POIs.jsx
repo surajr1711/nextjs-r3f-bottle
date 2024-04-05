@@ -1,23 +1,39 @@
 import React, { useEffect } from "react";
-import { poiData } from "./poiData";
+import { poiData } from "@/app/data/poiData";
 import { MathUtils } from "three";
 import { Html } from "@react-three/drei";
 import styles from "./POI.module.css";
-import { useThree } from "@react-three/fiber";
-import gsap from "gsap";
+import { cameraCoordinates } from "@/app/data/cameraCoordinates";
 
-const POIs = ({ hoveredMesh, setActiveMesh, animateCamera, ...props }) => {
+const POIs = ({
+	hoveredMesh,
+	activeMesh,
+	setActiveMesh,
+	setCameraControls,
+	//  animateCamera,
+	...props
+}) => {
 	const handleClick = (e, poi) => {
-		animateCamera(e, poi.camPos, poi.lookAt);
+		e.stopPropagation();
+		// animateCamera(e, poi.camPos, poi.lookAt);
+		setCameraControls(cameraCoordinates[poi.title.toLowerCase()]);
+		setActiveMesh(poi.title.toLowerCase());
+		// console.log(poi.title, "clicked");
 	};
 
 	return (
 		<>
 			{poiData.map((poi) => (
-				<Html key={MathUtils.generateUUID()} position={[poi.poiPos.x, poi.poiPos.y, poi.poiPos.z]} {...props}>
+				<Html key={MathUtils.generateUUID()} position={[poi.position.x, poi.position.y, poi.position.z]} {...props}>
 					<button
-						// when mesh is hovered, adds class hover so that poi will pulse
-						className={`${styles.poi} ${hoveredMesh === poi.title.toLowerCase() ? styles.hover : ""}`}
+						// when mesh is hovered, adds class hover so that poi will pulse otherwise check if mesh is the active one and make poi active else dont add additional classes
+						className={`${styles.poi} ${
+							hoveredMesh === poi.title.toLowerCase()
+								? styles.hover
+								: activeMesh === poi.title.toLowerCase()
+								? styles.focus
+								: ""
+						}`}
 						onClick={(e) => handleClick(e, poi)}
 					/>
 					<div className={styles.text}>

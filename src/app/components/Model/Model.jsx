@@ -4,6 +4,8 @@ import * as THREE from "three";
 import { useSnapshot } from "valtio";
 import { state } from "@/app/state/state";
 import { getMeshCenter } from "@/app/utils/getMeshCenter";
+import { cameraCoordinates } from "@/app/data/cameraCoordinates";
+import gsap from "gsap";
 
 // const studioHDRi = import("@pmndrs/assets/hdri/studio.exr").then((module) => module.default);
 
@@ -17,7 +19,9 @@ const Model = ({
 	isCapOpen,
 	setIsCapOpen,
 	colors,
-	resetCamera,
+	setCameraControls,
+	hiddenParts,
+	isTransparent,
 	...props
 }) => {
 	const group = useRef();
@@ -25,6 +29,31 @@ const Model = ({
 	const { actions } = useAnimations(animations, group);
 
 	const snap = useSnapshot(state);
+
+	// useEffect(() => {
+	// 	console.log(materials);
+	// }, [materials]);
+
+	Object.keys(materials).forEach((name) => {
+		materials[name].transparent = true;
+		// materials[name].opacity = 0.5;
+	});
+
+	useEffect(() => {
+		Object.keys(hiddenParts).forEach((part) => {
+			if (hiddenParts[part]) {
+				gsap.to(materials[part], {
+					opacity: 0,
+					duration: 0.5,
+				});
+			} else {
+				gsap.to(materials[part], {
+					opacity: isTransparent ? 0.5 : 1,
+					duration: 0.5,
+				});
+			}
+		});
+	}, [hiddenParts, materials, isTransparent]);
 
 	// create toggleCap event handler and store it in state
 	const toggleCap = useCallback(() => {
@@ -60,7 +89,7 @@ const Model = ({
 					}}
 					onPointerMissed={() => {
 						setActiveMesh(null);
-						resetCamera();
+						setCameraControls(cameraCoordinates.initial);
 					}}
 					dispose={null}
 					onPointerOver={(e) => {
