@@ -4,7 +4,6 @@ import { useControls } from "leva";
 import { OrbitControls, Environment } from "@react-three/drei";
 import Model from "../Model/Model";
 import POIs from "../POIs/POIs";
-import { useSnapshot } from "valtio";
 import { state } from "@/app/state/state";
 import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
@@ -79,49 +78,6 @@ const Experience = ({
 		// console.log(cameraControls);
 	}, [camera.position, cameraControls]);
 
-	/* const resetCamera = () => {
-		setCameraControls(cameraCoordinates.initial)
-	}; */
-
-	/* 	const resetCamera = () => {
-		// set camera position to front of bottle
-		gsap.to(camera.position, {
-			x: 0,
-			y: 3.06,
-			z: 5,
-			duration: 1,
-			ease: "power2.inOut",
-		});
-		// set center of orbit to center of scene
-		gsap.to(controlsRef.current.target, {
-			x: 0,
-			y: 0,
-			z: 0,
-			duration: 1,
-			ease: "power2.inOut",
-		});
-	}; */
-
-	/* const animateCamera = (e, camPos, orbitTarget) => {
-		e.stopPropagation();
-		// update the camera position
-		gsap.to(camera.position, {
-			x: camPos.x,
-			y: camPos.y,
-			z: camPos.z,
-			duration: 1,
-			ease: "power2.inOut",
-		});
-		// update the center of orbit to mesh center
-		gsap.to(controlsRef.current.target, {
-			x: orbitTarget.x,
-			y: orbitTarget.y,
-			z: orbitTarget.z,
-			duration: 1,
-			ease: "power2.inOut",
-		});
-	}; */
-
 	return (
 		<>
 			{/* {perfVisible ? <Perf position="top-left" /> : null} */}
@@ -168,7 +124,6 @@ const Experience = ({
 						hoveredMesh={hoveredMesh}
 						activeMesh={activeMesh}
 						setActiveMesh={setActiveMesh}
-						// animateCamera={animateCamera}
 						setCameraControls={setCameraControls}
 					/>
 				)}

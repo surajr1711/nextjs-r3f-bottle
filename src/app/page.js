@@ -5,8 +5,6 @@ import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { productInfo } from "./data/info";
 import SidePanel from "./components/SidePanel/SidePanel";
 import PanelSection, { UserInstructionsSection } from "./components/SidePanel/PanelSection";
-import { useSnapshot } from "valtio";
-import { state } from "./state/state";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 import Experience from "./components/Experience/Experience";
 import { useControls } from "leva";
@@ -15,6 +13,7 @@ import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import { Loader } from "@react-three/drei";
 import { cameraCoordinates } from "./data/cameraCoordinates";
 import { HexColorPicker } from "react-colorful";
+import { useModelAnimations } from "./contexts/ModelAnimations";
 
 export default function Home() {
 	// STATES
@@ -58,9 +57,9 @@ export default function Home() {
 	};
 
 	// const { sidePanelsOpen } = useControls("Side panels", { sidePanelsOpen: false });
-	const sidePanelsOpen = false;
+	const sidePanelsOpen = true;
 
-	const snap = useSnapshot(state);
+	const { modelAnimations } = useModelAnimations();
 
 	return (
 		<>
@@ -193,7 +192,7 @@ export default function Home() {
 				</PanelSection>
 
 				<PanelSection title="Model animations">
-					<button onClick={snap.actions?.toggleCap}>ToggleCap</button>
+					<button onClick={modelAnimations?.toggleCap}>ToggleCap</button>
 				</PanelSection>
 			</SidePanel>
 

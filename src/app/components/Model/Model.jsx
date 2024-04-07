@@ -1,11 +1,10 @@
 import { useGLTF, useAnimations, Center } from "@react-three/drei";
 import { useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
-import { useSnapshot } from "valtio";
-import { state } from "@/app/state/state";
 import { getMeshCenter } from "@/app/utils/getMeshCenter";
 import { cameraCoordinates } from "@/app/data/cameraCoordinates";
 import gsap from "gsap";
+import { useModelAnimations } from "@/app/contexts/ModelAnimations";
 
 // const studioHDRi = import("@pmndrs/assets/hdri/studio.exr").then((module) => module.default);
 
@@ -28,7 +27,8 @@ const Model = ({
 	const { nodes, materials, animations } = useGLTF(waterbottle);
 	const { actions } = useAnimations(animations, group);
 
-	const snap = useSnapshot(state);
+	// const snap = useSnapshot(state);
+	const { modelAnimations, setModelAnimations } = useModelAnimations();
 
 	// useEffect(() => {
 	// 	console.log(materials);
@@ -72,8 +72,8 @@ const Model = ({
 	}, [actions.closeCap, actions.openCap, isCapOpen, setIsCapOpen]);
 
 	useEffect(() => {
-		state.actions = { toggleCap };
-	}, [toggleCap]);
+		setModelAnimations({ toggleCap });
+	}, [setModelAnimations, toggleCap]);
 
 	return (
 		<>
