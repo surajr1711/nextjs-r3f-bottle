@@ -1,7 +1,5 @@
 import React from "react";
 import { HexColorPicker } from "react-colorful";
-import { state } from "@/app/state/state";
-import { useSnapshot } from "valtio";
 import styles from "./ColorPicker.module.css";
 
 const ColorPicker = ({ activeMesh, colors, setColors, ...props }) => {

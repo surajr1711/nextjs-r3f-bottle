@@ -4,7 +4,6 @@ import { useControls } from "leva";
 import { OrbitControls, Environment } from "@react-three/drei";
 import Model from "../Model/Model";
 import POIs from "../POIs/POIs";
-import { state } from "@/app/state/state";
 import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import * as THREE from "three";
