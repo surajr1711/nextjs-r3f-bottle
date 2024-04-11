@@ -1,8 +1,13 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
+import { Inter } from "next/font/google";
 import { ModelAnimationsProvider } from "./contexts/ModelAnimations";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+	// weight: ["400", "700"],
+	// style: ["normal"],
+	subsets: ["latin"],
+	// display: "swap",
+});
 
 export const metadata = {
 	title: "Create Next App",

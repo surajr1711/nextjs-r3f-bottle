@@ -27,7 +27,6 @@ const Model = ({
 	const { nodes, materials, animations } = useGLTF(waterbottle);
 	const { actions } = useAnimations(animations, group);
 
-	// const snap = useSnapshot(state);
 	const { modelAnimations, setModelAnimations } = useModelAnimations();
 
 	// useEffect(() => {

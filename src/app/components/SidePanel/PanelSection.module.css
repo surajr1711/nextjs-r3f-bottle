@@ -1,28 +1,41 @@
 .section {
 	margin-top: 1rem;
+	min-width: 300px;
+	max-width: 800px;
+	border-radius: 0.75rem;
+	overflow: hidden;
+	background-color: hsl(var(--neutral-hs), var(--l-85));
 }
 .header {
 	padding: 0.5rem;
-	background-color: rgb(60, 60, 60);
+	border-radius: 0.75rem;
+	background-color: hsl(var(--neutral-hs), var(--l-75));
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+	/* outline: 1px solid red; */
 }
-.title {
-	font-weight: bold;
+.buttonWrapper {
+	/* outline: 1px solid red; */
+	transition: 0.2s ease-out;
+	display: grid;
+	place-items: center;
 }
 
+.buttonWrapper.close {
+	transform: rotateZ(180deg);
+}
 .content {
 	padding: 0.5rem;
 	max-height: 500px;
 	overflow: auto;
 	transform-origin: top;
-	transition: max-height 0.2s ease-out, opacity 0.2s ease-out 0.1s;
-	border: 1px solid red;
+	transition: all 0.2s ease-out;
 }
 
 .content.close {
 	/* transform doesnt affect layout. layout should be affected so that next section slides up if one is collapsed. */
 	/* transform: scaleY(0);  */
 	max-height: 0;
-	opacity: 0;
+	padding-block: 0;
 }

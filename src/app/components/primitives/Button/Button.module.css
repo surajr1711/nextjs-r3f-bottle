@@ -1,0 +1,17 @@
+.button {
+	background-color: hsl(var(--neutral-hs), var(--l-0));
+	color: hsl(var(--neutral-hs), var(--l-100));
+	position: relative;
+	overflow: hidden;
+}
+.button.default {
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	border: none;
+}
+.button:hover {
+	background-color: hsl(var(--neutral-hs), var(--l-15));
+}
+.button:active {
+	background-color: hsl(var(--neutral-hs), var(--l-30));
+}

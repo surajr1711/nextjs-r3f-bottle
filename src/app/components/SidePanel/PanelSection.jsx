@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styles from "./PanelSection.module.css";
+import IconButton from "../primitives/IconButton/IconButton";
+import PropType from "prop-types";
 
-const PanelSection = ({ title = "title", open = true, children, ...props }) => {
+const PanelSection = ({ title = "Title", open = true, children = <div>Content</div>, ...props }) => {
 	const [isOpen, setIsOpen] = useState(open);
 
 	const contentStyles = `${styles.content} ${!isOpen && styles.close}`;
@@ -14,14 +16,21 @@ const PanelSection = ({ title = "title", open = true, children, ...props }) => {
 		<div className={styles.section} {...props}>
 			<div className={styles.header}>
 				<span className={styles.title}>{title}</span>
-				<button className={styles.button} onClick={handleClick}>
-					Open/Close
-				</button>
+
+				<div className={`${styles.buttonWrapper} ${!isOpen ? styles.close : null}`}>
+					<IconButton icon="expand_more" onClick={handleClick} />
+				</div>
 			</div>
 
 			<div className={contentStyles}>{children}</div>
 		</div>
 	);
+};
+
+PanelSection.propTypes = {
+	title: PropType.string,
+	open: PropType.bool,
+	children: PropType.element,
 };
 
 const UserInstructionsSection = () => {

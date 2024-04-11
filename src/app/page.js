@@ -14,6 +14,9 @@ import { Loader } from "@react-three/drei";
 import { cameraCoordinates } from "./data/cameraCoordinates";
 import { HexColorPicker } from "react-colorful";
 import { useModelAnimations } from "./contexts/ModelAnimations";
+import Button from "./components/primitives/Button/Button";
+import "material-icons/iconfont/outlined.css";
+import Checkbox from "./components/primitives/Checkbox/Checkbox";
 
 export default function Home() {
 	// STATES
@@ -103,102 +106,76 @@ export default function Home() {
 
 				<PanelSection title="Scene controls">
 					<div>
-						<span style={{ display: "block" }}>Change background color</span>
-						<HexColorPicker color={backgroundColor} onChange={(color) => setBackgroundColor(color)} />
-					</div>
-					<div>
-						<label>
-							<input
-								type="checkbox"
-								name="autoRotate"
-								checked={isAutoRotate}
-								onChange={handleAutoRotateCheckboxChange}
-							/>
-							Enable autorotate
-						</label>
-					</div>
-					<div>
-						<label>
-							<input
-								type="checkbox"
-								name="transparency"
-								checked={isTransparent}
-								onChange={handleTransparencyCheckboxChange}
-							/>
-							Enable transparency
-						</label>
-					</div>
-					<button
-						onClick={() => {
-							setCameraControls(cameraCoordinates.initial);
-						}}
-					>
-						Reset Camera
-					</button>
-					<button
-						onClick={() => {
-							setIsPOIVisible(!isPOIVisible);
-						}}
-					>
-						Toggle POIs
-					</button>
-					<button
-						onClick={() => {
-							setCameraControls(cameraCoordinates.bottle);
-						}}
-					>
-						Focus on bottle
-					</button>
-					<button
-						onClick={() => {
-							setCameraControls(cameraCoordinates.cap);
-						}}
-					>
-						Focus on cap
-					</button>
-					<button
-						onClick={() => {
-							setCameraControls(cameraCoordinates.button);
-						}}
-					>
-						Focus on button
-					</button>
-					<div>
-						<label>
-							<input
-								type="checkbox"
+						<div>
+							<span style={{ display: "block" }}>Change background color</span>
+							<HexColorPicker color={backgroundColor} onChange={(color) => setBackgroundColor(color)} />
+						</div>
+						<Checkbox
+							label="Enable autorotate"
+							name="autoRotate"
+							checked={isAutoRotate}
+							onClick={handleAutoRotateCheckboxChange}
+						/>
+						<Checkbox
+							label="Enable transparency"
+							name="transparency"
+							checked={isTransparent}
+							onClick={handleTransparencyCheckboxChange}
+						/>
+						<Button
+							label="Reset camera"
+							onClick={() => {
+								setCameraControls(cameraCoordinates.initial);
+							}}
+						/>
+						<Button
+							label="Toggle POIs"
+							onClick={() => {
+								setIsPOIVisible(!isPOIVisible);
+							}}
+						/>
+						<Button
+							label="Focus on bottle"
+							onClick={() => {
+								setCameraControls(cameraCoordinates.bottle);
+							}}
+						/>
+						<Button
+							label="Focus on cap"
+							onClick={() => {
+								setCameraControls(cameraCoordinates.cap);
+							}}
+						/>
+						<Button
+							label="Focus on button"
+							onClick={() => {
+								setCameraControls(cameraCoordinates.button);
+							}}
+						/>
+						<div>
+							<Checkbox
+								label="Hide bottle"
 								name="bottle"
 								checked={hiddenParts.bottle}
-								onChange={handleHidePartCheckboxChange}
+								onClick={handleHidePartCheckboxChange}
 							/>
-							Hide bottle
-						</label>
-						<br />
-						<label>
-							<input type="checkbox" name="cap" checked={hiddenParts.cap} onChange={handleHidePartCheckboxChange} />
-							Hide cap
-						</label>
-						<br />
-						<label>
-							<input
-								type="checkbox"
+							<Checkbox label="Hide cap" name="cap" checked={hiddenParts.cap} onClick={handleHidePartCheckboxChange} />
+							<Checkbox
+								label="Hide button"
 								name="button"
 								checked={hiddenParts.button}
-								onChange={handleHidePartCheckboxChange}
+								onClick={handleHidePartCheckboxChange}
 							/>
-							Hide button
-						</label>
+						</div>
 					</div>
 				</PanelSection>
 
 				<PanelSection title="Model animations">
-					<button onClick={modelAnimations?.toggleCap}>ToggleCap</button>
+					<Button label="Toggle cap" onClick={modelAnimations?.toggleCap} />
 				</PanelSection>
 			</SidePanel>
 
-			{/* LOADING SCREEN */}
-			{/* <LoadingScreen /> */}
-			<Loader />
+			{/* <Loader /> */}
 		</>
 	);
 }

@@ -1,0 +1,38 @@
+.wrapper {
+	display: flex;
+	align-items: center;
+	column-gap: 0.5rem;
+	cursor: pointer;
+}
+.label {
+	display: flex;
+	align-items: center;
+	column-gap: 0.5rem;
+	cursor: pointer;
+}
+.wrapper * {
+	/* let wrapper handle click events, not the internal elements */
+	pointer-events: none;
+}
+
+.input {
+	/* Hide the default checkbox */
+	appearance: none;
+	-webkit-appearance: none;
+}
+.checkbox {
+	/* style the custom checkbox */
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid #ccc;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	display: grid;
+	place-items: center;
+}
+
+.input:checked + .checkbox {
+	/* Style the checked state */
+	background-color: #007bff;
+	border-color: #007bff;
+}
