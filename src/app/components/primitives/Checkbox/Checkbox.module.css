@@ -15,11 +15,12 @@
 	pointer-events: none;
 }
 
+/* Hide the default checkbox */
 .input {
-	/* Hide the default checkbox */
 	appearance: none;
 	-webkit-appearance: none;
 }
+
 .checkbox {
 	/* style the custom checkbox */
 	width: 1rem;
@@ -29,10 +30,22 @@
 	cursor: pointer;
 	display: grid;
 	place-items: center;
+	/* outline: 1px solid red; */
+}
+.checkIconWrapper {
+	display: grid;
+	place-items: center;
+	opacity: 0;
+	/* outline: 1px solid red; */
 }
 
+/* Style the checked state of the checkbox */
 .input:checked + .checkbox {
-	/* Style the checked state */
 	background-color: #007bff;
 	border-color: #007bff;
+}
+
+/* Make the check icon visible when input is checked */
+.input:checked + .checkbox .checkIconWrapper {
+	opacity: 1;
 }

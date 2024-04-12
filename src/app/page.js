@@ -113,13 +113,13 @@ export default function Home() {
 						<Checkbox
 							label="Enable autorotate"
 							name="autoRotate"
-							checked={isAutoRotate}
+							defaultChecked={true}
 							onClick={handleAutoRotateCheckboxChange}
 						/>
 						<Checkbox
 							label="Enable transparency"
 							name="transparency"
-							checked={isTransparent}
+							defaultChecked={false}
 							onClick={handleTransparencyCheckboxChange}
 						/>
 						<Button
@@ -156,14 +156,22 @@ export default function Home() {
 							<Checkbox
 								label="Hide bottle"
 								name="bottle"
-								checked={hiddenParts.bottle}
+								// checked={hiddenParts.bottle}
+								defaultChecked={false}
 								onClick={handleHidePartCheckboxChange}
 							/>
-							<Checkbox label="Hide cap" name="cap" checked={hiddenParts.cap} onClick={handleHidePartCheckboxChange} />
+							<Checkbox
+								label="Hide cap"
+								name="cap"
+								defaultChecked={false}
+								// checked={hiddenParts.cap}
+								onClick={handleHidePartCheckboxChange}
+							/>
 							<Checkbox
 								label="Hide button"
 								name="button"
-								checked={hiddenParts.button}
+								defaultChecked={false}
+								// checked={hiddenParts.button}
 								onClick={handleHidePartCheckboxChange}
 							/>
 						</div>

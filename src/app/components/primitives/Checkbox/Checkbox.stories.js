@@ -4,9 +4,9 @@ import { fn } from "@storybook/test";
 export default {
 	title: "Components/Primitives/Checkbox",
 	component: Checkbox,
-	args: { onClick: fn() },
-
-	// decorators: [(Story) => <checkboxDecorator>{Story}</checkboxDecorator>],
+	args: {
+		onClick: fn(),
+	},
 };
 
 export const Default = {
