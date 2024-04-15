@@ -1,13 +1,12 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Perf } from "r3f-perf";
 import { useControls } from "leva";
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls, Environment, PerspectiveCamera, useProgress } from "@react-three/drei";
 import Model from "../Model/Model";
 import POIs from "../POIs/POIs";
 import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import * as THREE from "three";
-import { PerspectiveCamera, useProgress } from "@react-three/drei";
 
 const Experience = ({
 	activeMesh,

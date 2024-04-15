@@ -15,11 +15,9 @@ import { useEffect, useState, Suspense, useRef } from "react";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import { Loader } from "@react-three/drei";
 import { cameraCoordinates } from "./data/cameraCoordinates";
-import { HexColorPicker } from "react-colorful";
 import { useModelAnimations } from "./contexts/ModelAnimations";
 import Button from "./components/primitives/Button/Button";
 import "material-icons/iconfont/outlined.css";
-import Checkbox from "./components/primitives/Checkbox/Checkbox";
 
 export default function Home() {
 	const [hoveredMesh, setHoveredMesh] = useState(null);
@@ -59,10 +57,6 @@ export default function Home() {
 	const togglePOIs = () => {
 		setIsPOIHidden(!isPOIHidden);
 	};
-
-	// const resetCamera = () => {
-	// 	setCameraControls(cameraCoordinates.initial);
-	// };
 
 	// const { sidePanelsOpen } = useControls("Side panels", { sidePanelsOpen: false });
 	const sidePanelsOpen = true;
