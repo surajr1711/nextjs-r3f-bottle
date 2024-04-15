@@ -20,7 +20,7 @@ const Experience = ({
 	setColors,
 	cameraControls,
 	setCameraControls,
-	isPOIVisible,
+	isPOIHidden,
 	hiddenParts,
 	isAutoRotate,
 	isTransparent,
@@ -118,7 +118,7 @@ const Experience = ({
 					isTransparent={isTransparent}
 				/>
 
-				{isPOIVisible && (
+				{!isPOIHidden && (
 					<POIs
 						hoveredMesh={hoveredMesh}
 						activeMesh={activeMesh}

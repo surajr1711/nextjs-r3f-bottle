@@ -2,6 +2,7 @@ import React, { useEffect, useId, useState } from "react";
 import PropType from "prop-types";
 import styles from "./Checkbox.module.css";
 import Icon from "../Icon/Icon";
+import Text from "../Text/Text";
 
 const Checkbox = ({ id, name, label, ...props }) => {
 	const generatedId = useId();
@@ -18,7 +19,9 @@ const Checkbox = ({ id, name, label, ...props }) => {
 				</div>
 			</div>
 
-			<span>{label}</span>
+			<Text as="span" type="caption-l">
+				{label}
+			</Text>
 		</label>
 	);
 };

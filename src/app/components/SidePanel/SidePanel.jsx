@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./SidePanel.module.css";
 import PropType from "prop-types";
 import IconButton from "../primitives/IconButton/IconButton";
+import Text from "../primitives/Text/Text";
 
 const SidePanel = ({ title, left = true, open = true, children, ...props }) => {
 	const [isOpen, setIsOpen] = useState(open);
@@ -24,7 +25,10 @@ const SidePanel = ({ title, left = true, open = true, children, ...props }) => {
 			</div>
 
 			<div className={styles.content}>
-				<span className={styles.title}>{title}</span>
+				<Text as="span" type="heading-m">
+					{title}
+				</Text>
+				{/* <span className={styles.title}>{title}</span> */}
 				{children}
 			</div>
 		</div>

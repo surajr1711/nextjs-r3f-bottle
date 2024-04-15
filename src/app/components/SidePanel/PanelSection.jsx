@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import styles from "./PanelSection.module.css";
 import IconButton from "../primitives/IconButton/IconButton";
 import PropType from "prop-types";
+import Text from "../primitives/Text/Text";
+import { userInstructions } from "../../data/userInstructions";
+import { HexColorPicker } from "react-colorful";
+import Checkbox from "../primitives/Checkbox/Checkbox";
+import Button from "../primitives/Button/Button";
+import { cameraCoordinates } from "../../data/cameraCoordinates";
 
 const PanelSection = ({ title = "Title", open = true, children = <div>Content</div>, ...props }) => {
 	const [isOpen, setIsOpen] = useState(open);
@@ -15,7 +21,9 @@ const PanelSection = ({ title = "Title", open = true, children = <div>Content</d
 	return (
 		<div className={styles.section} {...props}>
 			<div className={styles.header}>
-				<span className={styles.title}>{title}</span>
+				<Text as="span" type="title-s">
+					{title}
+				</Text>
 
 				<div className={`${styles.buttonWrapper} ${!isOpen ? styles.close : null}`}>
 					<IconButton icon="expand_more" onClick={handleClick} />
@@ -36,47 +44,111 @@ PanelSection.propTypes = {
 const UserInstructionsSection = () => {
 	return (
 		<PanelSection title="User Instructions" open={false}>
-			<ul>
-				<li>Click on screen and drag to rotate the bottle.</li>
-				<li>Scroll the mousewheel to zoom in and out.</li>
-				<li>Click on a Point of Interest to focus on a part.</li>
-				<li>Click anywhere on the background to refocus on the whole bottle.</li>
-				<li>
-					Use the animation buttons on the right side panel to see the functionality of the bottle.
-					<ul>
-						<li>Open/close the cap.</li>
-						<li>Remove the cap.</li>
-						<li>Disassemble all parts; cap, silicone gasket, mouthpiece.</li>
-						<li>Do a full product tour explaining all features part by part.</li>
+			<>
+				{Object?.keys(userInstructions).map((title) => (
+					<ul key={title} className={styles.userInstList}>
+						{/* Description */}
+						<Text as="span">{userInstructions[title].description}</Text>
+
+						{/* List items */}
+						{userInstructions[title].body.map((item, i) => (
+							<li key={i} className={styles.userInstListItem}>
+								<Text as="span" type="body-s">
+									{item}
+								</Text>
+							</li>
+						))}
 					</ul>
-				</li>
-				<li>
-					Use the action buttons to control the scene.
-					<ul>
-						<li>Reset the camera.</li>
-						<li>Change the background.</li>
-						<li>Rotate the model.</li>
-						<li>Turn on confetti or dust or water spray or mini bottles</li>
-						<li>Hide the turntable</li>
-						<li>Select different camera angles.</li>
-					</ul>
-				</li>
-				<li>
-					Customize the bottle.
-					<ul>
-						<li>Change the colors.</li>
-						<li>Change the capacity/size.</li>
-						<li>Change the logo colors and style.</li>
-						<li>Add a print to the bottle.</li>
-						<li>Place stickers anywhere.</li>
-						<li>Add oil smudges, dirt, scratches, dents.</li>
-						<li>Engrave your name.</li>
-					</ul>
-				</li>
-			</ul>
+				))}
+			</>
+		</PanelSection>
+	);
+};
+
+const CustomizationSection = ({ activeMesh, colors, setColors, ...props }) => {
+	return (
+		<PanelSection title="Customization" {...props}>
+			<>
+				{/* Info area displays active mesh */}
+				<div className={styles.infoArea}>
+					<Text
+						as="span"
+						style={activeMesh ? { textTransform: "capitalize" } : null}
+						type={activeMesh ? "title-m" : "body-s"}
+					>
+						{activeMesh ? activeMesh : "Select a part to change its color."}
+					</Text>
+				</div>
+
+				{/* Color picker */}
+				<div className={!activeMesh ? styles.disabledColorPicker : null}>
+					<HexColorPicker
+						color={colors[activeMesh]}
+						onChange={(color) => setColors({ ...colors, [activeMesh]: color })}
+					/>
+				</div>
+			</>
+		</PanelSection>
+	);
+};
+
+const SceneControlsSection = ({
+	backgroundColor,
+	setBackgroundColor,
+	toggleAutoRotate,
+	toggleTransparency,
+	togglePOIs,
+	setCameraControls,
+	toggleParts,
+	...props
+}) => {
+	return (
+		<PanelSection title="Scene Controls" {...props}>
+			<>
+				{/* background color */}
+				<div>
+					<Text as="span" type="caption-l" style={{ marginBottom: "0.5rem" }}>
+						Background color
+					</Text>
+					<HexColorPicker color={backgroundColor} onChange={(color) => setBackgroundColor(color)} />
+				</div>
+
+				{/* Checkboxes */}
+				<div className={styles.padBlockBox}>
+					<div className={styles.flexbox}>
+						<Checkbox label="Autorotate" name="autoRotate" defaultChecked={true} onClick={toggleAutoRotate} />
+						<Checkbox label="Transparency" name="transparency" defaultChecked={false} onClick={toggleTransparency} />
+					</div>
+				</div>
+
+				<div className={styles.padBlockBox}>
+					<Text as="span" type="caption-l" style={{ marginBottom: "0.5rem" }}>
+						Hide elements
+					</Text>
+					<div className={styles.flexbox}>
+						<Checkbox label="POIs" name="togglePOIs" defaultChecked={false} onClick={togglePOIs} />
+						<Checkbox label="Bottle" name="bottle" defaultChecked={false} onClick={toggleParts} />
+						<Checkbox label="Cap" name="cap" defaultChecked={false} onClick={toggleParts} />
+						<Checkbox label="Button" name="button" defaultChecked={false} onClick={toggleParts} />
+					</div>
+				</div>
+
+				{/* Buttons */}
+				<div className={styles.padBlockBox}>
+					<Text as="span" type="caption-l" style={{ marginBottom: "0.5rem" }}>
+						Camera position
+					</Text>
+					<div className={styles.flexbox}>
+						<Button label="Reset" onClick={() => setCameraControls(cameraCoordinates.initial)} />
+						<Button label="Focus bottle" onClick={() => setCameraControls(cameraCoordinates.bottle)} />
+						<Button label="Focus cap" onClick={() => setCameraControls(cameraCoordinates.cap)} />
+						<Button label="Focus button" onClick={() => setCameraControls(cameraCoordinates.button)} />
+					</div>
+				</div>
+			</>
 		</PanelSection>
 	);
 };
 
 export default PanelSection;
-export { UserInstructionsSection };
+export { UserInstructionsSection, CustomizationSection, SceneControlsSection };

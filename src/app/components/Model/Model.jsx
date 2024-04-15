@@ -1,10 +1,9 @@
 import { useGLTF, useAnimations, Center } from "@react-three/drei";
 import { useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
-import { getMeshCenter } from "@/app/utils/getMeshCenter";
-import { cameraCoordinates } from "@/app/data/cameraCoordinates";
+import { cameraCoordinates } from "../../data/cameraCoordinates";
 import gsap from "gsap";
-import { useModelAnimations } from "@/app/contexts/ModelAnimations";
+import { useModelAnimations } from "../../contexts/ModelAnimations";
 
 // const studioHDRi = import("@pmndrs/assets/hdri/studio.exr").then((module) => module.default);
 

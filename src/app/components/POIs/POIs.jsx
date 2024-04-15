@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { poiData } from "@/app/data/poiData";
+import { poiData } from "../../data/poiData";
 import { MathUtils } from "three";
 import { Html } from "@react-three/drei";
 import styles from "./POI.module.css";
-import { cameraCoordinates } from "@/app/data/cameraCoordinates";
+import { cameraCoordinates } from "../../data/cameraCoordinates";
 
 const POIs = ({
 	hoveredMesh,
@@ -31,8 +31,8 @@ const POIs = ({
 							hoveredMesh === poi.title.toLowerCase()
 								? styles.hover
 								: activeMesh === poi.title.toLowerCase()
-								? styles.focus
-								: ""
+									? styles.focus
+									: ""
 						}`}
 						onClick={(e) => handleClick(e, poi)}
 					/>

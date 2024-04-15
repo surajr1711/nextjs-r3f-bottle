@@ -1,0 +1,106 @@
+/* TYPOGRAPHY */
+/* Caption 0.75rem */
+.caption-m,
+.label {
+	font-size: 0.75rem;
+	color: hsl(var(--neutral-hs), var(--l-20));
+	font-weight: 400;
+	display: block;
+}
+.caption-s,
+.small {
+	font-size: 0.625rem;
+	color: hsl(var(--neutral-hs), var(--l-20));
+	font-weight: 400;
+	display: block;
+}
+.caption-l {
+	font-size: 0.875rem;
+	color: hsl(var(--neutral-hs), var(--l-20));
+	font-weight: 400;
+	display: block;
+}
+/* Body 1rem  */
+.body-m,
+.p,
+.span {
+	font-size: 1rem;
+	color: hsl(var(--neutral-hs), var(--l-10));
+	font-weight: 400;
+	display: block;
+}
+.body-s {
+	font-size: 0.875rem;
+	color: hsl(var(--neutral-hs), var(--l-10));
+	font-weight: 400;
+	display: block;
+}
+.body-l {
+	font-size: 1.25rem;
+	color: hsl(var(--neutral-hs), var(--l-10));
+	font-weight: 400;
+	display: block;
+}
+/* title 1.5rem  */
+.title-m,
+.h5 {
+	font-size: 1.25rem;
+	color: hsl(var(--neutral-hs), var(--l-10));
+	font-weight: 600;
+	display: block;
+}
+.title-s,
+.h6 {
+	font-size: 1rem;
+	color: hsl(var(--neutral-hs), var(--l-10));
+	font-weight: 600;
+	display: block;
+}
+.title-l {
+	font-size: 1.5rem;
+	color: hsl(var(--neutral-hs), var(--l-10));
+	font-weight: 600;
+	display: block;
+}
+/* heading 2rem */
+.heading-m,
+.h4 {
+	font-size: 2rem;
+	color: hsl(var(--neutral-hs), var(--l-0));
+	font-weight: 400;
+	display: block;
+}
+.heading-s {
+	font-size: 1.75rem;
+	color: hsl(var(--neutral-hs), var(--l-0));
+	font-weight: 400;
+	display: block;
+}
+.heading-l,
+.h3 {
+	font-size: 2.5rem;
+	color: hsl(var(--neutral-hs), var(--l-0));
+	font-weight: 400;
+	display: block;
+}
+/* banner 3rem */
+.banner-m,
+.h2 {
+	font-size: 3rem;
+	color: hsl(var(--neutral-hs), var(--l-0));
+	font-weight: 600;
+	display: block;
+}
+.banner-s {
+	font-size: 2.675rem;
+	color: hsl(var(--neutral-hs), var(--l-0));
+	font-weight: 600;
+	display: block;
+}
+.banner-l,
+.h1 {
+	font-size: 3.5rem;
+	color: hsl(var(--neutral-hs), var(--l-0));
+	font-weight: 600;
+	display: block;
+}

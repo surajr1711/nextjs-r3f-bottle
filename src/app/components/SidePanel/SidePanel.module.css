@@ -4,7 +4,7 @@
 	height: 100vh;
 	top: 0;
 	overflow-y: scroll;
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: hsl(var(--neutral-hs), var(--l-90));
 	padding: 1rem;
 	transition: 0.2s ease-out;
 }
@@ -63,7 +63,7 @@
 .sidePanel.right.close .content {
 	transform: translateX(4rem);
 }
-
+/*
 .title {
 	font-size: 2rem;
-}
+} */

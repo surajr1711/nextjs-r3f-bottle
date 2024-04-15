@@ -8,6 +8,7 @@
 	padding: 0.5rem 1rem;
 	border-radius: 0.5rem;
 	border: none;
+	min-width: 8rem;
 }
 .button:hover {
 	background-color: hsl(var(--neutral-hs), var(--l-15));
