@@ -26,13 +26,7 @@ export const productInfo = {
 					{ name: "Slate Grey", hex: { cap: "", bottle: "", button: "" } }, */
 				],
 			],
-			[
-				"Variants",
-				[
-					["capacity", "600ml"],
-					["capacity", "400ml"],
-				],
-			],
+			["Variants", ["400ml", "600ml"]],
 			["Dimensions", '2.76"W x 9.84"H'],
 			["Weight", "0.235kgs"],
 			["Capacity", "600ml"],

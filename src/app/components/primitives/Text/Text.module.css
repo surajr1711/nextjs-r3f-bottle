@@ -46,20 +46,20 @@
 .h5 {
 	font-size: 1.25rem;
 	color: hsl(var(--neutral-hs), var(--l-10));
-	font-weight: 600;
+	font-weight: 500;
 	display: block;
 }
 .title-s,
 .h6 {
 	font-size: 1rem;
 	color: hsl(var(--neutral-hs), var(--l-10));
-	font-weight: 600;
+	font-weight: 500;
 	display: block;
 }
 .title-l {
 	font-size: 1.5rem;
 	color: hsl(var(--neutral-hs), var(--l-10));
-	font-weight: 600;
+	font-weight: 500;
 	display: block;
 }
 /* heading 2rem */

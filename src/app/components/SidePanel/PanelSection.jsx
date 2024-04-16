@@ -65,6 +65,57 @@ const UserInstructionsSection = () => {
 	);
 };
 
+const ProductInfoSection = ({ info, ...props }) => {
+	const specs = (
+		<dl>
+			{info.specs.map((arr, i) => (
+				<div key={i} className={styles.specs}>
+					<dt>
+						<Text type="body-s">{arr[0]}:&nbsp;</Text>
+					</dt>
+					<dd>
+						<Text type="body-s">{Array.isArray(arr[1]) ? arr[1].join(", ") : arr[1]}</Text>
+					</dd>
+				</div>
+			))}
+		</dl>
+	);
+
+	const features = (
+		<ul>
+			{info.features.map((feat, i) => (
+				<li key={i} className={styles.listItems}>
+					<Text type="body-s">{feat}</Text>
+				</li>
+			))}
+		</ul>
+	);
+
+	const button = info.hasOwnProperty("link") ? <a href={info.link.url}>{info.link.text}</a> : null;
+
+	return (
+		<PanelSection title="Product Details" {...props}>
+			<div className={styles.flexboxV}>
+				<div>
+					<Text type="title-m">{info.name}</Text>
+				</div>
+
+				<div>
+					<Text type="title-s">Specifications</Text>
+					{specs}
+				</div>
+
+				<div>
+					<Text type="title-s">Features</Text>
+					{features}
+				</div>
+
+				{button}
+			</div>
+		</PanelSection>
+	);
+};
+
 const CustomizationSection = ({ activeMesh, colors, setColors, ...props }) => {
 	return (
 		<PanelSection title="Customization" {...props}>
@@ -151,4 +202,4 @@ const SceneControlsSection = ({
 };
 
 export default PanelSection;
-export { UserInstructionsSection, CustomizationSection, SceneControlsSection };
+export { UserInstructionsSection, ProductInfoSection, CustomizationSection, SceneControlsSection };

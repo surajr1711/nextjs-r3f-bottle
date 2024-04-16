@@ -43,6 +43,23 @@
 	padding-top: 0.125rem;
 }
 
+/* Product info section */
+.specs {
+	display: grid;
+	grid-template-columns: 6rem 1fr;
+	row-gap: 0.25rem;
+}
+.listItems {
+	margin-bottom: 0.25rem;
+}
+
+.flexboxV {
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.75rem;
+	/* outline: 1px solid red; */
+}
+
 /* Customization Section */
 .infoArea {
 	height: 2rem;

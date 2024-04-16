@@ -1,11 +1,11 @@
 "use client";
 
 import { Canvas, useThree } from "@react-three/fiber";
-import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { productInfo } from "./data/info";
 import SidePanel from "./components/SidePanel/SidePanel";
 import PanelSection, {
 	CustomizationSection,
+	ProductInfoSection,
 	SceneControlsSection,
 	UserInstructionsSection,
 } from "./components/SidePanel/PanelSection";
@@ -93,9 +93,7 @@ export default function Home() {
 			<SidePanel title="Info" open={sidePanelsOpen}>
 				<UserInstructionsSection />
 
-				<PanelSection title="Product details" open={true}>
-					<InfoPanel info={productInfo[activeMesh || "product"]} />
-				</PanelSection>
+				<ProductInfoSection info={productInfo[activeMesh || "product"]} />
 			</SidePanel>
 
 			<SidePanel title="Interactions" left={false} open={sidePanelsOpen}>
