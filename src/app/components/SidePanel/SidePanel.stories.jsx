@@ -5,6 +5,7 @@ export default {
 	title: "Components/SidePanel",
 	component: SidePanel,
 	args: { onClick: fn() },
+	parameters: { layout: "fullscreen" },
 };
 
 export const Default = {

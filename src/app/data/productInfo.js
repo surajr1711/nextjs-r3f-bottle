@@ -1,3 +1,15 @@
+export const productColors = {
+	Navy: { cap: "#27487C", bottle: "#27487C", button: "#AAAAAA" },
+	White: { cap: "", bottle: "", button: "" },
+	"Silky Black": { cap: "", bottle: "", button: "" },
+	"Stainless Steel": { cap: "", bottle: "", button: "" },
+	"Garnet Red": { cap: "", bottle: "", button: "" },
+	"Matte Black": { cap: "", bottle: "", button: "" },
+	"Beige Gold": { cap: "", bottle: "", button: "" },
+	"Matte Gold": { cap: "", bottle: "", button: "" },
+	"Slate Grey": { cap: "", bottle: "", button: "" },
+};
+
 export const productInfo = {
 	product: {
 		name: "Zojirushi water bottle",
@@ -15,15 +27,6 @@ export const productInfo = {
 					"beige gold",
 					"matte gold",
 					"slate grey",
-					/* { name: "Navy", hex: { cap: "#27487C", bottle: "#27487C", button: "#AAAAAA" } },
-					{ name: "White", hex: { cap: "", bottle: "", button: "" } },
-					{ name: "Silky Black", hex: { cap: "", bottle: "", button: "" } },
-					{ name: "Stainless Steel", hex: { cap: "", bottle: "", button: "" } },
-					{ name: "Garnet Red", hex: { cap: "", bottle: "", button: "" } },
-					{ name: "Matte Black", hex: { cap: "", bottle: "", button: "" } },
-					{ name: "Beige Gold", hex: { cap: "", bottle: "", button: "" } },
-					{ name: "Matte Gold", hex: { cap: "", bottle: "", button: "" } },
-					{ name: "Slate Grey", hex: { cap: "", bottle: "", button: "" } }, */
 				],
 			],
 			["Variants", ["400ml", "600ml"]],

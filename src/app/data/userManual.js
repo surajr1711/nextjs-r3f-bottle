@@ -1,10 +1,10 @@
-export const userInstructions = {
+export const userManual = {
 	main: {
 		description: "Main controls",
 		body: [
 			"Click and drag to rotate.",
 			"Scroll to zoom.",
-			"Click on a Point of Interest to focus.",
+			"Click on a Point of Interest (white dot) to focus.",
 			"Click on the background to refocus.",
 		],
 	},

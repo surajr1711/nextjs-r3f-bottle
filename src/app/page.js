@@ -1,13 +1,14 @@
 "use client";
 
 import { Canvas, useThree } from "@react-three/fiber";
-import { productInfo } from "./data/info";
+import { productInfo, productColors } from "./data/productInfo";
 import SidePanel from "./components/SidePanel/SidePanel";
 import PanelSection, {
+	// AnimationsSection,
 	CustomizationSection,
 	ProductInfoSection,
 	SceneControlsSection,
-	UserInstructionsSection,
+	UserManualSection,
 } from "./components/SidePanel/PanelSection";
 import Experience from "./components/Experience/Experience";
 import { useControls } from "leva";
@@ -15,19 +16,14 @@ import { useEffect, useState, Suspense, useRef } from "react";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import { Loader } from "@react-three/drei";
 import { cameraCoordinates } from "./data/cameraCoordinates";
-import { useModelAnimations } from "./contexts/ModelAnimations";
 import Button from "./components/primitives/Button/Button";
 import "material-icons/iconfont/outlined.css";
 
-export default function Home() {
+const Home = () => {
 	const [hoveredMesh, setHoveredMesh] = useState(null);
 	const [activeMesh, setActiveMesh] = useState(null);
 	const [isCapOpen, setIsCapOpen] = useState(false);
-	const [colors, setColors] = useState({
-		cap: "#27487C",
-		bottle: "#27487C",
-		button: "#AAAAAA",
-	});
+	const [colors, setColors] = useState(productColors["Navy"]);
 	const [cameraControls, setCameraControls] = useState(cameraCoordinates.initial);
 	const [isPOIHidden, setIsPOIHidden] = useState(false);
 	const [hiddenParts, setHiddenParts] = useState({
@@ -37,7 +33,7 @@ export default function Home() {
 	});
 	const [isAutoRotate, setIsAutoRotate] = useState(true);
 	const [isTransparent, setIsTransparent] = useState(false);
-	const [backgroundColor, setBackgroundColor] = useState("#dddddd");
+	const [backgroundColor, setBackgroundColor] = useState("#b0b0b0");
 
 	// Handle checkbox change
 	const toggleParts = (e) => {
@@ -61,7 +57,7 @@ export default function Home() {
 	// const { sidePanelsOpen } = useControls("Side panels", { sidePanelsOpen: false });
 	const sidePanelsOpen = true;
 
-	const { modelAnimations } = useModelAnimations();
+	// const { modelAnimations } = useModelAnimations();
 
 	return (
 		<>
@@ -91,7 +87,7 @@ export default function Home() {
 
 			{/* USER INTERFACE */}
 			<SidePanel title="Info" open={sidePanelsOpen}>
-				<UserInstructionsSection />
+				<UserManualSection />
 
 				<ProductInfoSection info={productInfo[activeMesh || "product"]} />
 			</SidePanel>
@@ -109,12 +105,15 @@ export default function Home() {
 					toggleParts={toggleParts}
 				/>
 
-				<PanelSection title="Model animations">
+				{/* <AnimationsSection /> */}
+				{/* <PanelSection title="Model animations">
 					<Button label="Toggle cap" onClick={modelAnimations?.toggleCap} />
-				</PanelSection>
+				</PanelSection> */}
 			</SidePanel>
 
 			{/* <Loader /> */}
 		</>
 	);
-}
+};
+
+export default Home;

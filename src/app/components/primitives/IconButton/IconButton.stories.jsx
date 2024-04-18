@@ -12,3 +12,9 @@ export const Default = {
 		icon: "expand_more",
 	},
 };
+export const NotFilled = {
+	args: {
+		icon: "expand_more",
+		filled: false,
+	},
+};

@@ -1,6 +1,6 @@
 .button {
-	background-color: hsl(var(--neutral-hs), var(--l-0));
-	color: hsl(var(--neutral-hs), var(--l-100));
+	background-color: hsl(var(--neutral-hs), var(--l-10));
+	color: hsl(var(--neutral-hs), var(--l-90));
 	position: relative;
 	overflow: hidden;
 }
@@ -8,10 +8,11 @@
 	padding: 0.5rem 1rem;
 	border-radius: 0.5rem;
 	border: none;
-	min-width: 8rem;
+	min-width: 4rem;
+	max-width: 8rem;
 }
 .button:hover {
-	background-color: hsl(var(--neutral-hs), var(--l-15));
+	background-color: hsl(var(--neutral-hs), var(--l-20));
 }
 .button:active {
 	background-color: hsl(var(--neutral-hs), var(--l-30));

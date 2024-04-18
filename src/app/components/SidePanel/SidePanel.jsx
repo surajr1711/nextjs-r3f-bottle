@@ -11,25 +11,34 @@ const SidePanel = ({ title, left = true, open = true, children, ...props }) => {
 		setIsOpen(open);
 	}, [open]);
 
-	const sidePanelStyles = `${styles.sidePanel} ${left ? styles.left : styles.right} ${!isOpen && styles.close}`;
-	const buttonStyles = `${styles.button} ${left ? styles.leftSidePanel : styles.rightSidePanel} ${!isOpen && styles.close}`;
+	const wrapperStyles = `${styles.wrapper} ${left ? styles.left : styles.right} ${!isOpen && styles.close}`;
+
+	const buttonStyles = `${styles.button} ${left ? styles.left : styles.right} ${!isOpen && styles.close}`;
+
+	const contentStyles = `${styles.content} ${left ? styles.left : styles.right} `;
+
+	const titleDivStyles = `${left ? null : styles.titleDivRight}`;
+
+	const icon = left ? (isOpen ? "chevron_left" : "chevron_right") : isOpen ? "chevron_right" : "chevron_left";
 
 	const handleClick = () => {
 		setIsOpen(!isOpen);
+		// console.log(left ? "left" : "right", isOpen ? "open" : "closed");
 	};
 
 	return (
-		<div className={sidePanelStyles} {...props}>
-			<div className={buttonStyles}>
-				<IconButton icon="expand_more" onClick={handleClick} />
+		<div className={wrapperStyles}>
+			<div className={contentStyles} {...props}>
+				<div className={titleDivStyles}>
+					<Text as="span" type="title-l">
+						{title}
+					</Text>
+				</div>
+				{children}
 			</div>
 
-			<div className={styles.content}>
-				<Text as="span" type="heading-m">
-					{title}
-				</Text>
-				{/* <span className={styles.title}>{title}</span> */}
-				{children}
+			<div className={buttonStyles}>
+				<IconButton icon={icon} onClick={handleClick} />
 			</div>
 		</div>
 	);

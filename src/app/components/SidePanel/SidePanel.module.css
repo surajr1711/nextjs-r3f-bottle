@@ -1,12 +1,9 @@
-.sidePanel {
-	position: absolute;
-	width: 25rem;
-	height: 100vh;
-	top: 0;
-	overflow-y: scroll;
-	background-color: hsl(var(--neutral-hs), var(--l-90));
-	padding: 1rem;
+.wrapper {
+	--panel-length: 25rem;
+	--button-size: 3rem;
 	transition: 0.2s ease-out;
+	position: absolute;
+	top: 0;
 }
 .left {
 	left: 0;
@@ -14,56 +11,50 @@
 .right {
 	right: 0;
 }
-
+.wrapper.left.close {
+	transform: translateX(calc(-1 * var(--panel-length)));
+}
+.wrapper.right.close {
+	transform: translateX(var(--panel-length));
+}
 /* Side panel open close button */
 .button {
 	position: absolute;
 	top: 0;
-	width: 3rem;
-	height: 3rem;
+	width: var(--button-size);
+	height: var(--button-size);
+	margin-top: 0.5rem;
+	background-color: transparent;
 	display: grid;
 	place-items: center;
+	transform-origin: center;
 	transition: 0.2s ease-out;
 }
 /* For left sidepanel button is on the right */
-.button.leftSidePanel {
-	right: 0;
-	transform: rotateZ(90deg);
+.button.left {
+	left: calc(var(--panel-length) - var(--button-size));
 }
 /* For right sidepanel button is on the left */
-.button.rightSidePanel {
-	left: 0;
-	transform: rotateZ(-90deg);
+.button.right {
+	right: calc(var(--panel-length) - var(--button-size));
+}
+.button.left.close {
+	transform: translateX(var(--button-size));
+}
+.button.right.close {
+	transform: translateX(calc(-1 * var(--button-size)));
 }
 
-/* Close left sidepanel */
-.sidePanel.left.close {
-	transform: translateX(-22rem);
-}
-/* Close right sidepanel */
-.sidePanel.right.close {
-	transform: translateX(22rem);
-}
-
-/* Rotate button when closed */
-.sidePanel.left.close .button.close {
-	transform: rotateZ(-90deg);
-}
-.sidePanel.right.close .button.close {
-	transform: rotateZ(90deg);
-}
-
-/* move content away when side panel is closed */
 .content {
+	position: absolute;
+	top: 0;
+	width: var(--panel-length);
+	height: 100vh;
+	overflow-y: scroll;
+	background-color: hsl(var(--neutral-hs), var(--l-90));
+	padding: 1rem;
 	transition: 0.2s ease-out;
 }
-.sidePanel.left.close .content {
-	transform: translateX(-4rem);
+.titleDivRight {
+	margin-left: var(--button-size);
 }
-.sidePanel.right.close .content {
-	transform: translateX(4rem);
-}
-/*
-.title {
-	font-size: 2rem;
-} */

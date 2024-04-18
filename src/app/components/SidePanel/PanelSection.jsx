@@ -3,11 +3,13 @@ import styles from "./PanelSection.module.css";
 import IconButton from "../primitives/IconButton/IconButton";
 import PropType from "prop-types";
 import Text from "../primitives/Text/Text";
-import { userInstructions } from "../../data/userInstructions";
+import { userManual } from "../../data/userManual";
 import { HexColorPicker } from "react-colorful";
 import Checkbox from "../primitives/Checkbox/Checkbox";
 import Button from "../primitives/Button/Button";
 import { cameraCoordinates } from "../../data/cameraCoordinates";
+import { productColors } from "../../data/productInfo";
+import { useModelAnimations } from "../../contexts/ModelAnimations";
 
 const PanelSection = ({ title = "Title", open = true, children = <div>Content</div>, ...props }) => {
 	const [isOpen, setIsOpen] = useState(open);
@@ -26,7 +28,7 @@ const PanelSection = ({ title = "Title", open = true, children = <div>Content</d
 				</Text>
 
 				<div className={`${styles.buttonWrapper} ${!isOpen ? styles.close : null}`}>
-					<IconButton icon="expand_more" onClick={handleClick} />
+					<IconButton icon="expand_more" filled={false} onClick={handleClick} />
 				</div>
 			</div>
 
@@ -41,17 +43,17 @@ PanelSection.propTypes = {
 	children: PropType.element,
 };
 
-const UserInstructionsSection = () => {
+const UserManualSection = () => {
 	return (
-		<PanelSection title="User Instructions" open={false}>
+		<PanelSection title="User Manual" open={false}>
 			<>
-				{Object?.keys(userInstructions).map((title) => (
+				{Object?.keys(userManual).map((title) => (
 					<ul key={title} className={styles.userInstList}>
 						{/* Description */}
-						<Text as="span">{userInstructions[title].description}</Text>
+						<Text as="span">{userManual[title].description}</Text>
 
 						{/* List items */}
-						{userInstructions[title].body.map((item, i) => (
+						{userManual[title].body.map((item, i) => (
 							<li key={i} className={styles.userInstListItem}>
 								<Text as="span" type="body-s">
 									{item}
@@ -118,7 +120,7 @@ const ProductInfoSection = ({ info, ...props }) => {
 
 const CustomizationSection = ({ activeMesh, colors, setColors, ...props }) => {
 	return (
-		<PanelSection title="Customization" {...props}>
+		<PanelSection title="Colors" {...props}>
 			<>
 				{/* Info area displays active mesh */}
 				<div className={styles.infoArea}>
@@ -127,7 +129,7 @@ const CustomizationSection = ({ activeMesh, colors, setColors, ...props }) => {
 						style={activeMesh ? { textTransform: "capitalize" } : null}
 						type={activeMesh ? "title-m" : "body-s"}
 					>
-						{activeMesh ? activeMesh : "Select a part to change its color."}
+						{activeMesh ? activeMesh : "Click a part and change its color here."}
 					</Text>
 				</div>
 
@@ -138,6 +140,13 @@ const CustomizationSection = ({ activeMesh, colors, setColors, ...props }) => {
 						onChange={(color) => setColors({ ...colors, [activeMesh]: color })}
 					/>
 				</div>
+
+				{/* Reset button */}
+				<Button
+					label="Reset colors"
+					style={{ marginTop: "0.75rem" }}
+					onClick={() => setColors(productColors["Navy"])}
+				/>
 			</>
 		</PanelSection>
 	);
@@ -153,8 +162,9 @@ const SceneControlsSection = ({
 	toggleParts,
 	...props
 }) => {
+	const { modelAnimations } = useModelAnimations();
 	return (
-		<PanelSection title="Scene Controls" {...props}>
+		<PanelSection title="Controls" {...props}>
 			<>
 				{/* background color */}
 				<div>
@@ -187,19 +197,41 @@ const SceneControlsSection = ({
 				{/* Buttons */}
 				<div className={styles.padBlockBox}>
 					<Text as="span" type="caption-l" style={{ marginBottom: "0.5rem" }}>
-						Camera position
+						Camera focus
 					</Text>
 					<div className={styles.flexbox}>
 						<Button label="Reset" onClick={() => setCameraControls(cameraCoordinates.initial)} />
-						<Button label="Focus bottle" onClick={() => setCameraControls(cameraCoordinates.bottle)} />
-						<Button label="Focus cap" onClick={() => setCameraControls(cameraCoordinates.cap)} />
-						<Button label="Focus button" onClick={() => setCameraControls(cameraCoordinates.button)} />
+						<Button label="Bottle" onClick={() => setCameraControls(cameraCoordinates.bottle)} />
+						<Button label="Cap" onClick={() => setCameraControls(cameraCoordinates.cap)} />
+						<Button label="Button" onClick={() => setCameraControls(cameraCoordinates.button)} />
 					</div>
+				</div>
+
+				<div className={styles.padBlockBox}>
+					<Text as="span" type="caption-l" style={{ marginBottom: "0.5rem" }}>
+						Animations
+					</Text>
+					<Button label="Toggle cap" onClick={modelAnimations?.toggleCap} />
 				</div>
 			</>
 		</PanelSection>
 	);
 };
 
+/* const AnimationsSection = () => {
+	const { modelAnimations } = useModelAnimations();
+	return (
+		<PanelSection title="Animations">
+			<Button label="Toggle cap" onClick={modelAnimations?.toggleCap} />
+		</PanelSection>
+	);
+}; */
+
 export default PanelSection;
-export { UserInstructionsSection, ProductInfoSection, CustomizationSection, SceneControlsSection };
+export {
+	UserManualSection,
+	ProductInfoSection,
+	CustomizationSection,
+	SceneControlsSection,
+	// AnimationsSection
+};
